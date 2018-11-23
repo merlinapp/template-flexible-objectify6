@@ -1,0 +1,9 @@
+com/merlinjobs/flexible/template/Application.class
+com/merlinjobs/flexible/template/Item.class
+com/merlinjobs/flexible/template/AppEngineMemcacheClientService.class
+com/merlinjobs/flexible/template/HelloController.class
+com/merlinjobs/flexible/template/ServletInitializer.class
+com/merlinjobs/flexible/template/ObjectifyConfig.class
+com/merlinjobs/flexible/template/ObjectifyConfig$ObjectifyListener.class
+com/merlinjobs/flexible/template/OfyService.class
+com/merlinjobs/flexible/template/AppEngineMemcacheClientService$AppEngineIdentifiableValue.class
