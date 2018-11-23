@@ -26,7 +26,7 @@ client libraries.
 [maven-download]: https://maven.apache.org/download.cgi
 [maven-install]: https://maven.apache.org/install.html
 
-### To test it use a Project in the Google Cloud Platform Console called merlin-dev
+### Use a Project in the Google Cloud Platform Console called
 
 Go to [Google Cloud Console][cloud-console] 
 
@@ -44,6 +44,7 @@ consume billable resources such as running flexible instances and storing data.
 If you haven't already installed the Google Cloud SDK, [install and initialize
 the Google Cloud SDK][cloud-sdk] now. The SDK contains tools and libraries that
 enable you to create and manage resources on Google Cloud Platform.
+
 
 [cloud-sdk]: https://cloud.google.com/sdk/
 
@@ -75,7 +76,7 @@ These settings should be revisited for production use.
 
 ## Deploy to App Engine flexible environment
 1. Set the correct Cloud SDK project via `gcloud config set project
-   YOUR_PROJECT` to the ID of your application `merlin-dev`.
+   YOUR_PROJECT` to the ID of your application.
 1. `mvn appengine:deploy`
 1. Visit `http://YOUR_PROJECT.appspot.com`.
 
