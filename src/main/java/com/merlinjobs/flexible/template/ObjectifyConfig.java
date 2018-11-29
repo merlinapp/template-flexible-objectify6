@@ -4,6 +4,7 @@ import com.google.cloud.datastore.DatastoreOptions;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyFilter;
 import com.googlecode.objectify.ObjectifyService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,15 @@ import java.util.logging.Logger;
 
 @Configuration
 public class ObjectifyConfig {
+
+  @Value("${use.objectify.datastore.local}")
+  private boolean dataStoreLocal;
+
+  @Value("${gc.project.id}")
+  private String gcProjectId;
+
+  @Value("${dev.endpoint.datastore}")
+  private String endpointDataStore;
 
   private final Logger logger = Logger.getLogger(ObjectifyConfig.class.getName());
 
@@ -42,33 +52,23 @@ public class ObjectifyConfig {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-//      if (System.getenv("SPRING_PROFILES_ACTIVE") == null) {
-//        // local without memcache (gradle bootRun)
-//        ObjectifyService.init(new ObjectifyFactory(
-//            DatastoreOptions.newBuilder()
-//                .setHost("http://localhost:8484")
-//                .setProjectId("merlin-dev")
-//                .build()
-//                .getService()
-//        ));
-//      } else if ("local".equals(System.getenv("SPRING_PROFILES_ACTIVE"))) {
-//        // local with memcache (gradle appengineRun)
-//        ObjectifyService.init(new ObjectifyFactory(
-//            DatastoreOptions.newBuilder().setHost("http://localhost:8484")
-//                .setProjectId("merlin-dev")
-//                .build().getService(),
-//            new AppEngineMemcacheClientService()
-//        ));
-//      } else {
-//        // on appengine
-//
-//
-//
-//      }
+      if (dataStoreLocal) {
+        // local (gradle bootRun)
+        logger.info("starting ObjectifyService in local");
+        ObjectifyService.init(new ObjectifyFactory(
+            DatastoreOptions.newBuilder()
+                .setHost(endpointDataStore)
+                .setProjectId(gcProjectId)
+                .build()
+                .getService()
+        ));
+      } else {
+        // on appengine flex
         logger.info("starting ObjectifyService");
-        ObjectifyService.init(new ObjectifyFactory(DatastoreOptions.getDefaultInstance().getService(),
-                new AppEngineMemcacheClientService()));
-        ObjectifyService.register(Item.class);
+        ObjectifyService.init(new ObjectifyFactory(DatastoreOptions.getDefaultInstance().getService()));
+
+      }
+      ObjectifyService.register(Item.class);
     }
 
     @Override
